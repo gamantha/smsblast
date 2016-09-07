@@ -9,6 +9,7 @@ use app\models\Pesan;
 use app\models\Proyek;
 use app\models\Customer;
 use app\models\PesanSearch;
+use app\models\ContactInfo;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -47,41 +48,86 @@ class PesanController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-    
+
     public function actionDaftarpesanasi($id)
     {
-        echo 'user nomer ' . $id;   
+        echo 'user nomer ' . $id;
     }
-    
+
     public function actionDaftarpesandamar($id)
     {
-        echo 'user nomer ' . $id;   
+        echo 'user nomer ' . $id;
     }
-    
+
+
+
     public function actionDaftarpesan()
     {
         $daftarproyek = Customer::find()->asArray()->andWhere(['proyek_id' => $_GET['proyek_id']])->All();
-        /*echo '<pre>';
-        print_r($daftarproyek);
-        echo '</pre>';*/
+
         $idproyek = ArrayHelper::getColumn($daftarproyek, 'id');
-        
-        //print_r($idproyek);
-        
+
         $daftarpesans = Pesan::find()->andWhere(['in', 'id', $idproyek])->andWhere(['in', 'status', ['recurring','undelivered']])->All();
-        
-        /*echo '<pre>';
-        print_r($daftarpesan);
-        echo '</pre>';*/
+
         $result = count($daftarpesans);
-        
+
         echo 'jumlah message untuk di send = ' . $result . '<br><br>';
-            
-        
+        $total_sms_terpakai = 0;
+
         foreach($daftarpesans as $daftarpesan) {
-            echo 'customer : ' . $daftarpesan->customer_id . '<br>' .'isi pesan : ' . $daftarpesan->isi_pesan . '<br>' . 'jumlah karakter : ' . strlen($daftarpesan->isi_pesan) . '<br><br>';
+         $contact = ContactInfo::find()->andWhere(['customer_id' => $daftarpesan->customer_id])->One();
+            echo 'customer : ' . $daftarpesan->customer_id . '<br>' .'isi pesan : ' . $daftarpesan->isi_pesan . '<br>' . 'jumlah karakter : ' . strlen($daftarpesan->isi_pesan) .
+            '<br>' . 'jumlah sms : ' . ceil(strlen($daftarpesan->isi_pesan) / 160) .
+            '<br>' . 'email : ' . $contact->email .
+            '<br>' . 'sms : ' . $contact->sms . '<br><br>';
+
+
+
+            $total_sms_terpakai = $total_sms_terpakai + ceil(strlen($daftarpesan->isi_pesan) / 160);
         }
-        
+
+$sisa_sms = $this->actionChecksmscredit();
+if ($sisa_sms >= $total_sms_terpakai) {
+
+
+ $ch = curl_init();
+
+ foreach($daftarpesans as $daftarpesan) {
+  $contact = ContactInfo::find()->andWhere(['customer_id' => $daftarpesan->customer_id])->One();
+
+  $userkey = "he75cu";
+  $passkey = "sukahaji";
+  $nohp = $contact->sms;
+  $pesan = urlencode($daftarpesan->isi_pesan);
+
+
+
+  $url = "http://reguler.zenziva.net/apps/smsapi.php?userkey=$userkey&passkey=$passkey&nohp=$nohp&pesan=$pesan";
+   echo $url;
+
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  $result = curl_exec($ch);
+/**
+DISINI YANG BELUM:
+1. merubah undelivered jadi delivered
+2. kirim email
+*/
+ }
+
+   curl_close($ch);
+
+ echo ' <br/><br/>sms telah di send<br/>';
+
+
+
+} else {
+ echo ' jumlah kredit sms tidak mencukupi<br/>';
+}
+        echo '==============================<br/>total sms terpakai = ' . $total_sms_terpakai;
+        echo '<br/> kredit sms tersedia = '. $sisa_sms;
+         echo '<br/> sisa sms setelah send= '. ($sisa_sms - $total_sms_terpakai);
+
         Yii::$app->mailer->compose('home-link')
             ->setFrom('sanggarindah@gmail.com')
             ->setTo('me.arifrahman@gmail.com')
@@ -89,10 +135,10 @@ class PesanController extends Controller
             ->setTextBody('SUP BRO')
             ->setHtmlBody('<b>HTML content</b>')
             ->send();
-        
-        
+
+
     }
-    
+
     public function actionPilih()
     {
         return $this->render('pilihperusahaan');
@@ -175,7 +221,7 @@ class PesanController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
+
     public function actionChecksmscredit(){
 
         $userkey = "he75cu";
@@ -193,7 +239,7 @@ class PesanController extends Controller
 
         $xmlobj = simplexml_load_string($result);
         //print_r($result);
-        echo $xmlobj->message->value;
+        return $xmlobj->message->value;
 
     }
 
@@ -224,5 +270,5 @@ class PesanController extends Controller
 
 
     }
-    
+
 }
