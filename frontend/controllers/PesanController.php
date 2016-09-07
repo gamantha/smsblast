@@ -68,14 +68,18 @@ class PesanController extends Controller
         
         //print_r($idproyek);
         
-        $daftarpesans = Pesan::find()->andWhere(['in', 'id', $idproyek])
-                                               ->andWhere(['in', 'status', ['recurring','undelivered']])->All();
+        $daftarpesans = Pesan::find()->andWhere(['in', 'id', $idproyek])->andWhere(['in', 'status', ['recurring','undelivered']])->All();
+        
         /*echo '<pre>';
         print_r($daftarpesan);
         echo '</pre>';*/
+        $result = count($daftarpesans);
+        
+        echo 'jumlah message untuk di send = ' . $result . '<br><br>';
+            
         
         foreach($daftarpesans as $daftarpesan) {
-            echo 'customer : ' . $daftarpesan->customer_id . '<br>' .'isi pesan : ' . $daftarpesan->isi_pesan . '<br>';
+            echo 'customer : ' . $daftarpesan->customer_id . '<br>' .'isi pesan : ' . $daftarpesan->isi_pesan . '<br>' . 'jumlah karakter : ' . strlen($daftarpesan->isi_pesan) . '<br><br>';
         }
         
         Yii::$app->mailer->compose('home-link')
@@ -171,4 +175,54 @@ class PesanController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function actionChecksmscredit(){
+
+        $userkey = "he75cu";
+        $passkey = "sukahaji";
+        $url = "http://reguler.zenziva.net/apps/smsapibalance.php?userkey=$userkey&passkey=$passkey";
+
+
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        $xmlobj = simplexml_load_string($result);
+        //print_r($result);
+        echo $xmlobj->message->value;
+
+    }
+
+
+    public function actionSendsms(){
+
+        $userkey = "he75cu";
+        $passkey = "sukahaji";
+        $nohp = "0811913848";
+        $pesan = "test";
+
+        $ch = curl_init();
+
+        for ($i = 0; $i <10; $i++) {
+
+        $url = "http://reguler.zenziva.net/apps/smsapi.php?userkey=$userkey&passkey=$passkey&nohp=$nohp&pesan=test $i";
+        echo $url;
+        echo '<br/>';
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        $result = curl_exec($ch);
+
+
+        }
+
+        curl_close($ch);
+
+
+    }
+    
 }
