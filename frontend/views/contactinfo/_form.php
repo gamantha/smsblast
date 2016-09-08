@@ -16,6 +16,7 @@ use app\models\Customer;
 <?php $dataList=ArrayHelper::map(Customer::find()->asArray()->all(), 'id', 'nama');?>
 	 <?=$form->field($model, 'customer_id')->dropDownList($dataList,
          ['prompt'=>'-Pilih Penyimpanan-'])->label('Customer') ?>
+    
     <?= $form->field($model, 'sms')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>

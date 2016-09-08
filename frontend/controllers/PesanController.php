@@ -8,6 +8,7 @@ use Yii;
 use app\models\Pesan;
 use app\models\Proyek;
 use app\models\Customer;
+use app\models\ContactInfo;
 use app\models\PesanSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -69,6 +70,8 @@ class PesanController extends Controller
         //print_r($idproyek);
         
         $daftarpesans = Pesan::find()->andWhere(['in', 'id', $idproyek])->andWhere(['in', 'status', ['recurring','undelivered']])->All();
+        $idpesan = ArrayHelper::getColumn($daftarpesans, 'customer_id');
+        $daftarcustomerinfos = ContactInfo::find()->andWhere(['in', 'customer_id', $daftarpesans])->All();
         
         /*echo '<pre>';
         print_r($daftarpesan);
@@ -78,17 +81,29 @@ class PesanController extends Controller
         echo 'jumlah message untuk di send = ' . $result . '<br><br>';
             
         
-        foreach($daftarpesans as $daftarpesan) {
+        
+        /*foreach($daftarpesans as $daftarpesan) {
             echo 'customer : ' . $daftarpesan->customer_id . '<br>' .'isi pesan : ' . $daftarpesan->isi_pesan . '<br>' . 'jumlah karakter : ' . strlen($daftarpesan->isi_pesan) . '<br><br>';
         }
         
-        Yii::$app->mailer->compose('home-link')
+        foreach($daftarcustomerinfos as $daftarcustomerinfo) {
+            echo $daftarcustomerinfo->email;
+        }*/
+        
+        foreach($daftarpesans as $pesan => $value1){
+            $value2=$daftarcustomerinfos[$pesan];
+            echo 'customer id : ' . $value1->customer_id . '<br>' . 'email : ' . $value2->email . '<br>' . 'nomer telfon : ' . $value2->sms . '<br>' . 'jumlah karakter : ' . strlen($value1->isi_pesan) . '<br>' . 'isi pesan : ' . $value1->isi_pesan . '<br><br>';
+        }
+        
+        
+        
+        /*Yii::$app->mailer->compose('home-link')
             ->setFrom('sanggarindah@gmail.com')
             ->setTo('me.arifrahman@gmail.com')
-            ->setSubject('Tagihan')
-            ->setTextBody('SUP BRO')
-            ->setHtmlBody('<b>HTML content</b>')
-            ->send();
+            ->setSubject()
+            ->setTextBody()
+            ->setHtmlBody()
+            ->send();*/
         
         
     }
