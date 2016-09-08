@@ -93,18 +93,18 @@ class PesanController extends Controller
         
         foreach($daftarpesans as $pesan => $value1){
             $value2=$daftarcustomerinfos[$pesan];
-            echo 'customer id : ' . $value1->customer_id . '<br>' . 'email : ' . $value2->email . '<br>' . 'nomer telfon : ' . $value2->sms . '<br>' . 'jumlah karakter : ' . strlen($value1->isi_pesan) . '<br>' . 'jumlah sms : ' . ceil(strlen($value1->isi_pesan) / 160) . '<br>' . 'isi pesan : ' . $value1->isi_pesan . '<br><br>';
+            echo 'customer id : ' . $value1->customer_id . '<br>' . 'email : ' . $value2->email . '<br>' . 'nomer telfon : ' . $value2->sms . '<br>' . 'jumlah karakter : ' . strlen($value1->isi_pesan) . '<br>' . 'jumlah sms : ' . ceil(strlen($value1->isi_pesan) / 160) . '<br>' . 'isi pesan : ' . $value1->isi_pesan . '<br><br>' . Yii::$app->mailer->compose('home-link')
+            ->setFrom('sanggarindah@gmail.com')
+            ->setTo($value2->email)
+            ->setSubject('Sanggar Indah Grup - Reminder')
+            ->setTextBody('')
+            ->setHtmlBody($value1->isi_pesan)
+            ->send();
         }
         
         
         
-        Yii::$app->mailer->compose('home-link')
-            ->setFrom('sanggarindah@gmail.com')
-            ->setTo('me.arifrahman@gmail.com')
-            ->setSubject()
-            ->setTextBody()
-            ->setHtmlBody()
-            ->send();
+        /**/
         
         
         $total_sms_terpakai = 0;
@@ -153,6 +153,7 @@ DISINI YANG BELUM:
    curl_close($ch);
 
  echo ' <br/><br/>sms telah di send<br/>';
+
 
 
 
