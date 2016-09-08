@@ -93,13 +93,17 @@ class PesanController extends Controller
         
         foreach($daftarpesans as $pesan => $value1){
             $value2=$daftarcustomerinfos[$pesan];
-            echo 'customer id : ' . $value1->customer_id . '<br>' . 'email : ' . $value2->email . '<br>' . 'nomer telfon : ' . $value2->sms . '<br>' . 'jumlah karakter : ' . strlen($value1->isi_pesan) . '<br>' . 'jumlah sms : ' . ceil(strlen($value1->isi_pesan) / 160) . '<br>' . 'isi pesan : ' . $value1->isi_pesan . '<br><br>' . Yii::$app->mailer->compose('home-link')
+            echo 'customer id : ' . $value1->customer_id . '<br>' . 'email : ' . $value2->email . '<br>' . 'nomer telfon : ' . $value2->sms . '<br>' . 'jumlah karakter : ' . strlen($value1->isi_pesan) . '<br>' . 'jumlah sms : ' . ceil(strlen($value1->isi_pesan) / 160) . '<br>' . 'isi pesan : ' . $value1->isi_pesan . '<br><br>' .
+            Yii::$app->mailer->compose('home-link')
             ->setFrom('sanggarindah@gmail.com')
             ->setTo($value2->email)
             ->setSubject('Sanggar Indah Grup - Reminder')
             ->setTextBody('')
             ->setHtmlBody($value1->isi_pesan)
             ->send();
+            
+            $value1->status = 'delivered';
+            $value1->save();
         }
         
         
@@ -148,6 +152,7 @@ DISINI YANG BELUM:
 1. merubah undelivered jadi delivered
 2. kirim email
 */
+     
  }
 
    curl_close($ch);
