@@ -1,0 +1,246 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"fu",
+				"function"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 111.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/F/Work/Installers/elasticsearch-2.4.0.tar/elasticsearch-2.4.0/README.textile",
+		"/C/xampp/htdocs/firebase-reminate/database/scripts/main.js",
+		"/C/xampp/htdocs/tao/taoDelivery/views/templates/DeliveryServer/runDeliveryExecution.tpl",
+		"/C/xampp/htdocs/tao/taoDelivery/controller/DeliveryServer.php",
+		"/C/xampp/htdocs/tao/tao/models/classes/class.Service.php",
+		"/C/xampp/htdocs/tao/taoDelivery/views/templates/DeliveryServer/layout.tpl",
+		"/C/xampp/htdocs/tao/taoDelivery/views/js/controller/runtime/service/deliveryExecution.js",
+		"/C/xampp/htdocs/tao/tao/views/templates/layout.tpl",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/login.tpl",
+		"/C/xampp/htdocs/ppsdm/report/frontend/config/.gitignore",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/index.html",
+		"/C/xampp/htdocs/ppsdm/tao/README.md",
+		"/C/xampp/htdocs/ppsdm/tao/.htaccess",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/httpd.conf",
+		"/C/xampp/htdocs/smsblast/common/config/main.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/login-message.tpl",
+		"/C/xampp/htdocs/tao/taoQtiTest/views/templates/test_runner.tpl",
+		"/C/xampp/htdocs/tao/taoQtiTest/views/templates/item_runner.tpl",
+		"/C/Users/RENO/Desktop/New folder/mercurejakartasimatupang.com-Aug-2016/mercurejakartasimatupang.com-Aug-2016",
+		"/C/Users/RENO/Desktop/New folder/modsec2_mercurej_Aug_2016/modsec2_mercurej_Aug_2016",
+		"/C/xampp/htdocs/tao/taoDelivery/models/classes/class.DeliveryServerService.php",
+		"/C/xampp/htdocs/tao/taoQtiItem/views/templates/runtime/qti_item_runner.tpl",
+		"/C/xampp/htdocs/tao/taoDelivery/views/js/controller/runtime/service/fullScreen.js",
+		"/C/xampp/htdocs/tao/taoDelivery/model/execution/DeliveryExecution.php",
+		"/C/xampp/htdocs/tao/taoDelivery/model/DeliveryContainer.php",
+		"/C/xampp/htdocs/tao/taoDelivery/views/js/tpl/fullscreen-modal-feedback.tpl",
+		"/C/xampp/htdocs/tao/taoDelivery/views/templates/DeliveryServer/index.tpl",
+		"/C/xampp/htdocs/tao/taoDelivery/views/js/controllers.min.js",
+		"/C/xampp/htdocs/tao/tao/models/classes/service/class.ServiceCall.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/print_eselon3.php [2].working",
+		"/C/xampp/htdocs/askom/vendor/pdf/tcpdf_include.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/index [2].html",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/wp-blog-header.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/functions.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/admin.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/wp-cron.php",
+		"/C/Users/RENO/Desktop/PPSDM-BPS/RENO/PENGOLAH-OBSERVASI.csv",
+		"/C/Users/RENO/Desktop/ref_uraian.sql",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/ScheduleController [4].php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/Employee.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/Useremployee.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/ScheduleController [3].php",
+		"/C/Users/RENO/Desktop/query.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/update.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/user [3].php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/TbAbsensiController.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/per_karyawan.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/user.php",
+		"/C/xampp/htdocs/reviu/.gitignore",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/web [2].php",
+		"/C/xampp/htdocs/reviu/web/index.php",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/web.php",
+		"/C/Users/RENO/Desktop/PPSDM-BPS/ASESMEN-PENGOLAHAN - BPS/INPUT-TEMPLATE-SMR/BPS-OBSERVASI-LANDSCAPE-BRAM-2015-VERSI-5.0-short-excel.smr",
+		"/C/Users/RENO/Documents/NetSarang/Xftp/Temporary/httpd [2].conf",
+		"/C/Users/RENO/AppData/Roaming/InfraRecorder/settings.xml",
+		"/C/Google/google_appengine/userinfuser/serverside/constants.py",
+		"/C/Google/google_appengine/UserInfuser/app.yaml",
+		"/C/Google/google_appengine/UserInfuser/index.yaml",
+		"/C/Google/google_appengine/UserInfuser/VERSION",
+		"/C/Google/google_appengine/UserInfuser/static/html/signup.html",
+		"/C/Google/google_appengine/UserInfuser/fsm.yaml",
+		"/C/Google/google_appengine/UserInfuser/README",
+		"/C/xampp/htdocs/ionic/myapp/www/index.html",
+		"/C/Google/google_appengine/UserInfuser/KNOWN_ISSUES",
+		"/F/BACKUP/sosiora/www-yii1/protected/controllers/SiteController.php",
+		"/F/BACKUP/sosiora/www-yii1/protected/modules/user/controllers/UserController.php",
+		"/F/BACKUP/sosiora/www-yii1/protected/views/layouts/main.php.zenner",
+		"/F/BACKUP/sosiora/www-yii1/protected/modules/user/views/user/login.php",
+		"/C/xampp/htdocs/fingerprint/tarik-data.php",
+		"/C/xampp/htdocs/fingerprint/clear-data.php",
+		"/C/xampp/htdocs/jemari/frontend/web/index.php",
+		"/C/xampp/htdocs/jemari/.gitignore",
+		"/C/xampp/htdocs/jemari/common/config/.gitignore",
+		"/C/xampp/htdocs/jemari/frontend/config/.gitignore",
+		"/C/xampp/htdocs/jemari/frontend/web/.gitignore",
+		"/F/BACKUP/checkfingerprintmanager.php",
+		"/C/xampp/htdocs/advanced/README.md",
+		"/C/xampp/htdocs/jemari/frontend/controllers/SiteController.php",
+		"/C/Users/RENO/Desktop/log_16150815.log",
+		"/C/Users/RENO/Desktop/raw.sql",
+		"/C/Users/RENO/Desktop/CONTOH TWITTER USER DETAIL",
+		"/C/Users/RENO/Downloads/startbootstrap-freelancer-1.0.3/startbootstrap-freelancer-1.0.3/index.html",
+		"/F/BACKUP/sigis-older/protected/modules/personalia/controllers/TbAbsensiController.php",
+		"/C/xampp/htdocs/fingerprint/download-sidik-jari.php",
+		"/C/Users/RENO/Desktop/copi cd/Software Development Kit/WEB SDK/PHP/download-sidik-jari.php",
+		"/C/Users/RENO/Downloads/attlog (1).dat",
+		"/C/xampp/htdocs/fingerprint/parse.php",
+		"/I/ARCHIVED/Navicat Premium 11 + keymaker/license_file",
+		"/I/ARCHIVED/Navicat Premium 11 + keymaker/core.nfo"
+	],
+	"find":
+	{
+		"height": 34.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"ter_re",
+			"subscribe",
+			"04/Aug",
+			"subscribe04/Aug",
+			"subscribe",
+			"png",
+			"data",
+			"ob_star",
+			"ob_clea",
+			"snapshot",
+			"then",
+			"attenda",
+			"hardware\\hard",
+			"attend",
+			"$cuti",
+			"rere",
+			"workschedule",
+			"per_KA",
+			"actionlo",
+			"actionlogin",
+			"admin"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 0.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 171.0,
+	"status_bar_visible": true
+}

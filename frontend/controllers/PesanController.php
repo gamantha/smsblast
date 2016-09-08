@@ -6,14 +6,17 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use Yii;
 use app\models\Pesan;
+use app\models\PesanPerproyek;
 use app\models\Proyek;
 use app\models\Customer;
 use app\models\PesanSearch;
+use app\models\CustomerSearch;
+use app\models\BankAccount;
 use app\models\ContactInfo;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-
+      use yii\data\ActiveDataProvider;
 /**
  * PesanController implements the CRUD actions for Pesan model.
  */
@@ -90,7 +93,7 @@ class PesanController extends Controller
         foreach($daftarcustomerinfos as $daftarcustomerinfo) {
             echo $daftarcustomerinfo->email;
         }*/
-        
+        /*
         foreach($daftarpesans as $pesan => $value1){
             $value2=$daftarcustomerinfos[$pesan];
             echo 'customer id : ' . $value1->customer_id . '<br>' . 'email : ' . $value2->email . '<br>' . 'nomer telfon : ' . $value2->sms . '<br>' . 'jumlah karakter : ' . strlen($value1->isi_pesan) . '<br>' . 'jumlah sms : ' . ceil(strlen($value1->isi_pesan) / 160) . '<br>' . 'isi pesan : ' . $value1->isi_pesan . '<br><br>' . Yii::$app->mailer->compose('home-link')
@@ -101,7 +104,7 @@ class PesanController extends Controller
             ->setHtmlBody($value1->isi_pesan)
             ->send();
         }
-        
+        */
         
         
         /**/
@@ -133,7 +136,23 @@ if ($sisa_sms >= $total_sms_terpakai) {
   $userkey = "he75cu";
   $passkey = "sukahaji";
   $nohp = $contact->sms;
-  $pesan = urlencode($daftarpesan->isi_pesan);
+
+$bank_string ='';
+$pesan_string = '';
+$pesan_string = $daftarpesan->isi_pesan;
+$banks = BankAccount::find()->andWhere(['customer_id' => $daftarpesan->customer_id])->All();
+foreach ($banks as $bank) {
+  $bank_string = $bank_string . ' ' .  $bank->bank_name . '/' . $bank->virtual_account_number;
+}
+//print_r($bank);
+  
+  $temp_pesan = str_replace('$bankaccount', $bank_string, $pesan_string);
+  echo '<br/>';
+  //
+  //str_replace('uang','nina',$temp_pesan);
+  //echo '<br/>temp pesan : ';
+  //echo $temp_pesan;
+  $pesan = urlencode($temp_pesan);
 
 
 
@@ -142,7 +161,7 @@ if ($sisa_sms >= $total_sms_terpakai) {
 
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  $result = curl_exec($ch);
+  //$result = curl_exec($ch);
 /**
 DISINI YANG BELUM:
 1. merubah undelivered jadi delivered
@@ -179,6 +198,150 @@ DISINI YANG BELUM:
     {
         return $this->render('pilihperusahaan');
     }
+
+
+    public function actionPilih2($id)
+    {
+
+        $total_sms_terpakai = 0;
+            if($_POST) {
+                echo '<br/><br/><br/><br/><br/><pre>';
+              print_r($_POST);
+
+              echo $pesan = $_POST['PesanPerproyek']['isi_pesan'];
+              $users = isset($_POST['selection']) ? $_POST['selection'] : [];
+              foreach ($users as $user) {
+                # code...
+                echo $user;
+
+
+
+                         $contact = ContactInfo::find()->andWhere(['customer_id' => $user])->One();
+                         $email = '';
+                         $email = $contact->email;
+                         $sms = '';
+                         $sms = $contact->sms;
+            echo 'customer : ' . $user . '<br>' .'isi pesan : ' . $pesan . '<br>' . 'jumlah karakter : ' . strlen($pesan) .
+            '<br>' . 'jumlah sms : ' . ceil(strlen($pesan) / 160) .
+            '<br>' . 'email : ' .  $email.
+            '<br>' . 'sms : ' . $sms . '<br><br>';
+
+
+
+            $total_sms_terpakai = $total_sms_terpakai + ceil(strlen($pesan) / 160);
+
+              }
+
+
+
+
+$sisa_sms = $this->actionChecksmscredit();
+if ($sisa_sms >= $total_sms_terpakai) {
+
+
+ $ch = curl_init();
+
+
+              foreach ($users as $user) {
+                # code...
+              //  echo $user;
+
+  $userkey = "he75cu";
+  $passkey = "sukahaji";
+
+                         $contact = ContactInfo::find()->andWhere(['customer_id' => $user])->One();
+                         $email = '';
+                         $email = $contact->email;
+                         $sms = '';
+                         $sms = $contact->sms;
+
+
+
+$bank_string ='';
+$pesan_string = '';
+$pesan_string = $pesan;
+$banks = BankAccount::find()->andWhere(['customer_id' => $user])->All();
+foreach ($banks as $bank) {
+  $bank_string = $bank_string . ' ' .  $bank->bank_name . '/' . $bank->virtual_account_number;
+}
+
+  $temp_pesan = str_replace('$bankaccount', $bank_string, $pesan_string);
+
+  $pesan = urlencode($temp_pesan);
+
+
+
+  $url = "http://reguler.zenziva.net/apps/smsapi.php?userkey=$userkey&passkey=$passkey&nohp=$sms&pesan=$pesan";
+   echo $url;
+   echo '<br/>';
+
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     $result = curl_exec($ch);
+
+              }
+
+
+
+
+   curl_close($ch);
+ echo ' <br/><br/>sms telah di send<br/>';
+
+
+
+
+} else {
+ echo ' jumlah kredit sms tidak mencukupi<br/>';
+}
+        echo '==============================<br/>total sms terpakai = ' . $total_sms_terpakai;
+        echo '<br/> kredit sms tersedia = '. $sisa_sms;
+         echo '<br/> sisa sms setelah send= '. ($sisa_sms - $total_sms_terpakai);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              echo '</pre>';
+            } 
+
+
+      $pesanproyek = new PesanPerproyek();
+
+        $searchModel = new CustomerSearch();
+        $params = Yii::$app->request->queryParams;
+        $params['CustomerSearch']['proyek_id'] = $id;
+        $dataProvider = $searchModel->search($params);
+
+
+        return $this->render('pilih2', [
+          'pesanproyek' => $pesanproyek,
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+
+
+
+    }
+
 
     /**
      * Displays a single Pesan model.

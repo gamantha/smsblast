@@ -5,23 +5,23 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "pesan".
+ * This is the model class for table "pesan_perproyek".
  *
  * @property integer $id
- * @property integer $customer_id
+ * @property integer $proyek_id
  * @property string $isi_pesan
  * @property string $status
  *
- * @property Customer $customer
+ * @property Proyek $proyek
  */
-class Pesan extends \yii\db\ActiveRecord
+class PesanPerproyek extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'pesan';
+        return 'pesan_perproyek';
     }
 
     /**
@@ -30,9 +30,9 @@ class Pesan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['customer_id'], 'integer'],
+            [['proyek_id'], 'integer'],
             [['isi_pesan', 'status'], 'string'],
-            [['customer_id'], 'exist', 'skipOnError' => true, 'targetClass' => Customer::className(), 'targetAttribute' => ['customer_id' => 'id']],
+            [['proyek_id'], 'exist', 'skipOnError' => true, 'targetClass' => Proyek::className(), 'targetAttribute' => ['proyek_id' => 'id']],
         ];
     }
 
@@ -43,7 +43,7 @@ class Pesan extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'customer_id' => Yii::t('app', 'Customer ID'),
+            'proyek_id' => Yii::t('app', 'Proyek ID'),
             'isi_pesan' => Yii::t('app', 'Isi Pesan'),
             'status' => Yii::t('app', 'Status'),
         ];
@@ -52,17 +52,17 @@ class Pesan extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCustomer()
+    public function getProyek()
     {
-        return $this->hasOne(Customer::className(), ['id' => 'customer_id']);
+        return $this->hasOne(Proyek::className(), ['id' => 'proyek_id']);
     }
 
     /**
      * @inheritdoc
-     * @return PesanQuery the active query used by this AR class.
+     * @return PesanPerproyekQuery the active query used by this AR class.
      */
     public static function find()
     {
-        return new PesanQuery(get_called_class());
+        return new PesanPerproyekQuery(get_called_class());
     }
 }

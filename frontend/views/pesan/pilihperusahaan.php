@@ -16,7 +16,8 @@ $this->title = 'My Yii Application';
 $projects = Proyek::find()->All();
 foreach($projects as $project){
 
- echo '<p><a class="btn btn-default" href="'. Url::toRoute(['pesan/daftarpesan?' . 'proyek_id=' . $project->id]) . '" >'.$project->nama_proyek.' &raquo;</a></p>';
+ //echo '<p><a class="btn btn-default" href="'. Url::toRoute(['pesan/daftarpesan?' . 'proyek_id=' . $project->id]) . '" >'.$project->nama_proyek.' &raquo;</a></p>';
+ echo '<p><a class="btn btn-default" href="'. Url::toRoute(['pesan/pilih2?' . 'id=' . $project->id]) . '" >'.$project->nama_proyek.' &raquo;</a></p>';
 
 }
 
