@@ -8,7 +8,6 @@ use Yii;
 use app\models\Pesan;
 use app\models\Proyek;
 use app\models\Customer;
-use app\models\ContactInfo;
 use app\models\PesanSearch;
 use app\models\ContactInfo;
 use yii\web\Controller;
@@ -94,18 +93,18 @@ class PesanController extends Controller
         
         foreach($daftarpesans as $pesan => $value1){
             $value2=$daftarcustomerinfos[$pesan];
-            echo 'customer id : ' . $value1->customer_id . '<br>' . 'email : ' . $value2->email . '<br>' . 'nomer telfon : ' . $value2->sms . '<br>' . 'jumlah karakter : ' . strlen($value1->isi_pesan) . '<br>' . 'isi pesan : ' . $value1->isi_pesan . '<br><br>';
+            echo 'customer id : ' . $value1->customer_id . '<br>' . 'email : ' . $value2->email . '<br>' . 'nomer telfon : ' . $value2->sms . '<br>' . 'jumlah karakter : ' . strlen($value1->isi_pesan) . '<br>' . 'jumlah sms : ' . ceil(strlen($value1->isi_pesan) / 160) . '<br>' . 'isi pesan : ' . $value1->isi_pesan . '<br><br>';
         }
         
         
         
-        /*Yii::$app->mailer->compose('home-link')
+        Yii::$app->mailer->compose('home-link')
             ->setFrom('sanggarindah@gmail.com')
             ->setTo('me.arifrahman@gmail.com')
             ->setSubject()
             ->setTextBody()
             ->setHtmlBody()
-            ->send();*/
+            ->send();
         
         
         $total_sms_terpakai = 0;
@@ -164,13 +163,13 @@ DISINI YANG BELUM:
         echo '<br/> kredit sms tersedia = '. $sisa_sms;
          echo '<br/> sisa sms setelah send= '. ($sisa_sms - $total_sms_terpakai);
 
-        Yii::$app->mailer->compose('home-link')
+        /*Yii::$app->mailer->compose('home-link')
             ->setFrom('sanggarindah@gmail.com')
             ->setTo('me.arifrahman@gmail.com')
             ->setSubject('Tagihan')
             ->setTextBody('SUP BRO')
             ->setHtmlBody('<b>HTML content</b>')
-            ->send();
+            ->send();*/
 
 
     }
