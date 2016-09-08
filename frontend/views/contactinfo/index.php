@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
-
+use yii\helpers\ArrayHelper;
+use app\models\Customer;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ContactInfoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -24,8 +25,15 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
             'customer_id',
+            [
+             'attribute' => 'id',
+             'label'=>'Nama Customer',
+			  //'filter'=>array('1'=>'PROD','2'=>'KU','3'=>'LG','4'=>'MRK','5'=>'PRC','6'=>'UM'),
+             'filter' => ArrayHelper::map(Customer::find()->asArray()->All(), 'id', 'nama'),
+             'value'=>function($data) {return $data->customer->nama;},
+           ],
             'sms',
             'email:email',
             'address',
