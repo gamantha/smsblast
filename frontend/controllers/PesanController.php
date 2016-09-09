@@ -211,22 +211,33 @@ DISINI YANG BELUM:
         $total_sms_terpakai = 0;
             if($_POST) {
                 echo '<br/><br/><br/><br/><br/><pre>';
-              print_r($_POST);
-
-              echo $pesan = $_POST['PesanPerproyek']['isi_pesan'];
+//              print_r($_POST);
+$pesan = $_POST['PesanPerproyek']['isi_pesan'];
+           //   echo $pesan = $_POST['PesanPerproyek']['isi_pesan'];
               $users = isset($_POST['selection']) ? $_POST['selection'] : [];
               foreach ($users as $user) {
                 # code...
-                echo $user;
+              //  echo $user;
 
 
 
                          $contact = ContactInfo::find()->andWhere(['customer_id' => $user])->One();
-                         $email = '';
-                         $email = $contact->email;
-                         $sms = '';
-                         $sms = $contact->sms;
-            echo 'customer : ' . $user . '<br>' .'isi pesan : ' . $pesan . '<br>' . 'jumlah karakter : ' . strlen($pesan) .
+                         $email = isset($contact->email) ? $contact->email : '';
+                         //$sms = '';
+                         $sms = isset($contact->sms) ? $contact->sms : '';
+                         $bank_string ='';
+$pesan_string = '';
+$pesan_string = $pesan;
+$banks = BankAccount::find()->andWhere(['customer_id' => $user])->All();
+foreach ($banks as $bank) {
+  $bank_string = $bank_string . ' ' .  $bank->bank_name . '/' . $bank->virtual_account_number;
+}
+
+  $temp_pesan = str_replace('$virtual_account_number', $bank_string, $pesan_string);
+  $pesan2 = urlencode($temp_pesan);
+
+
+            echo 'customer : ' . $user . '<br>' .'isi pesan : ' . $pesan . '<br>' . 'jumlah karakter : ' . strlen($temp_pesan) .
             '<br>' . 'jumlah sms : ' . ceil(strlen($pesan) / 160) .
             '<br>' . 'email : ' .  $email.
             '<br>' . 'sms : ' . $sms . '<br><br>';
@@ -246,7 +257,7 @@ if ($sisa_sms >= $total_sms_terpakai) {
 
  $ch = curl_init();
 
-
+$total_sms_terpakai = 0;
               foreach ($users as $user) {
                 # code...
               //  echo $user;
@@ -255,10 +266,10 @@ if ($sisa_sms >= $total_sms_terpakai) {
   $passkey = "sukahaji";
 
                          $contact = ContactInfo::find()->andWhere(['customer_id' => $user])->One();
-                         $email = '';
-                         $email = $contact->email;
-                         $sms = '';
-                         $sms = $contact->sms;
+                         //$email = '';
+                         $email = isset($contact->email) ? $contact->email : '';
+                         //$sms = '';
+                         $sms = isset($contact->sms) ? $contact->sms : '';
 
 
 
@@ -270,19 +281,31 @@ foreach ($banks as $bank) {
   $bank_string = $bank_string . ' ' .  $bank->bank_name . '/' . $bank->virtual_account_number;
 }
 
-  $temp_pesan = str_replace('$bankaccount', $bank_string, $pesan_string);
+  $temp_pesan = str_replace('$virtual_account_number', $bank_string, $pesan_string);
 
-  $pesan = urlencode($temp_pesan);
+  $pesan2 = urlencode($temp_pesan);
 
 
 
-  $url = "http://reguler.zenziva.net/apps/smsapi.php?userkey=$userkey&passkey=$passkey&nohp=$sms&pesan=$pesan";
-   echo $url;
-   echo '<br/>';
+  $url = "http://reguler.zenziva.net/apps/smsapi.php?userkey=$userkey&passkey=$passkey&nohp=$sms&pesan=$pesan2";
 
+if(isset($contact->sms)) {
+              $total_sms_terpakai = $total_sms_terpakai + ceil(strlen($temp_pesan) / 160);
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
      $result = curl_exec($ch);
+
+   echo '<br/>TERKIRIM : ';
+           echo $url;
+   } else {
+       echo '<br/>TIDAK ADA SMS : ';
+           echo $url;
+   }
+      $newpesanindividu = new Pesan();
+      $newpesanindividu->isi_pesan = $temp_pesan;
+      $newpesanindividu->customer_id = $user;
+      $newpesanindividu->status = 'delivered';
+      $newpesanindividu->save();
 
               }
 
@@ -291,6 +314,12 @@ foreach ($banks as $bank) {
 
    curl_close($ch);
  echo ' <br/><br/>sms telah di send<br/>';
+
+ $newpesanproyek = new PesanPerproyek();
+ $newpesanproyek->proyek_id = $id;
+ $newpesanproyek->isi_pesan = $pesan_string . ' [' . date("Y/m/d"). ']';
+ $newpesanproyek->status = 'delivered'; 
+ $newpesanproyek->save();
 
 
 

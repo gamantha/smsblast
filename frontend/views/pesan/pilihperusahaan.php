@@ -25,7 +25,7 @@ foreach($projects as $project){
 ?>
 <?php    
     echo '<br/>';
- //echo '<p><a class="btn btn-success" href="'. Url::toRoute(['sigproject/create']) . '" >Tambah PT &raquo;</a></p>';
+ echo '<p><a class="btn btn-success" href="'. Url::toRoute(['pesanperproyek/index']) . '" >Index pesan per proyek &raquo;</a></p>';
 
 ?>
 
