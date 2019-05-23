@@ -5,7 +5,7 @@ return [
             'class' => 'yii\db\Connection',
             'dsn' => 'mysql:host=localhost;dbname=sig_sms',
             'username' => 'root',
-            'password' => '',
+            'password' => 'sanggar',
             'charset' => 'utf8',
         ],
         'mailer' => [
